@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} | About Us {% endblock %}
+
+{% block content %}
+    <section id="showcase-inner" class="py-5 text-white">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <h1 class="display-4 mb-4">About Us</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-5 bg-secondary text-white">
+        <div class="container">
+            <h3 class="text-center mb-31">
+                <a>What we offer</a>
+                <hr class="main_underline">
+            </h3>
+            <div class="row text-center">
+                <div class="col-md-4 products">
+                    <!-- <i class="fas fa-comment fa-4x mr-4"></i> -->
+
+                    <!-- <img src="../../realestate/static/img/house/rent_house.png"> -->
+                    <img class="re_products image" src="{% static 'img/house/buy_house.png' %}">
+                    <!-- <hr> -->
+                    <h3 class="index_bottom_title">Rent a Home</h3>
+                    <p class="index_bottom_text">With over 1 million+ homes for sale available on the website, Pule
+                        can match you with a house you will want to call home.</p>
+                </div>
+                <div class="col-md-4 products">
+                    <!-- <i class="fas fa-home fa-4x mr-4"></i> -->
+                    <img class="re_products image" src="{% static 'img/house/neighbours.png' %}">
+                    <!-- <hr> -->
+                    <h3 class="index_bottom_title">Buy Hostel Space</h3>
+                    <p class="index_bottom_text">With over 1 million+ homes for sale available on the website, Pule
+                        can match you with a house you will want to call home.</p>
+                </div>
+                <div class="col-md-4 products">
+                    <!-- <i class="fas fa-suitcase fa-4x mr-4"></i> -->
+                    <img class="re_products image" src="{% static 'img/house/rent_house1.png' %}">
+                    <!-- <hr> -->
+                    <h3 class="index_bottom_title">Book Hotels</h3>
+                    <p class="index_bottom_text">With over 1 million+ homes for sale available on the website, Pule
+                        can match you with a house you will want to call home.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

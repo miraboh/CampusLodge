@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+{% load static %}
+
+{% block title %} | Welcome {% endblock %}
+
+{% block content %}
+    <!-- Showcase -->
+    <section id="showcase">
+        <div class="container text-center">
+            <h1 class="display-4 mb-4">Smart Campus Property Search</h1>
+            <p class="lead">Find the perfect House</p>
+            <div class="home-search p-5">
+                <div class="overlay search_container">
+
+                    <div class="search">
+                        <form action="{% url 'search' %}">
+                            <div class="form-content">
+                                <div class="form-search">
+                                    <!-- Form Row 1 -->
+                                    <div class="form-row">
+                                        <div class="col-md-4search mb-3">
+                                            <label class="sr-only">Campus</label>
+                                            <select name="campus_school" class="form-control">
+                                                <option selected="true" disabled="disabled">Campus & School (All)
+                                                </option>
+                                                {% for item in compusSchool %}
+                                                    <option value="{{ item.name }}"> {{ item.name }} </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-4search mb-3">
+                                            <label class="sr-only">Keywords</label>
+                                            <input type="text" name="keywords" class="form-control"
+                                                   placeholder="Locality (Places around campus, suburbs, street etc)">
+                                        </div>
+                                    </div>
+                                    <!-- Form Row 2 -->
+                                    <div class="form-row">
+                                        <div class="col-md-6search mb-3">
+                                            <label class="sr-only">House Type</label>
+                                            <select name="house_type" class="form-control">
+                                                <option selected="true" disabled="disabled">Type (All)</option>
+                                                {% for key,value in house_choices.items %}
+                                                    <option value="{{ key }}">{{ value }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6search mb-3">
+                                            <select name="price" class="form-control" id="type">
+                                                <option selected="true" disabled="disabled">Max Price (Any)</option>
+                                                {% for key,value in price_choices.items %}
+                                                    <option value="{{ key }}">{{ value }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="form-search-button">
+                                    <button class="btn btn-secondary btn-block mt-4" type="submit">Search</button>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Alerts -->
+    {% include 'partials/_alerts.html' %}
+
+    <!-- Listings -->
+    <section id="listings" class="py-5 bg-secondary text-white">
+        <div class="container">
+            <!-- <h3 class="text-center mb-31">Latest Listings</h3> -->
+            <h3 class="text-center mb-31">
+                <a>Most Recent Houses</a>
+                <hr class="main_underline">
+            </h3>
+            <div class="enclose_row">
+                <div class="row">
+                    {% if listings %}
+                        {% for listing in listings %}
+                            <!-- Listing 1 -->
+                            <a href="{% url 'listing' listing.id %}" style="">
+
+                                <div class="col-md-6 col-lg-4 mb-4 index">
+                                    <div class="card listing-preview">
+                                        {#                                        <!-- <a href="{% url 'listing' listing.id %}">aaaaa</a> -->#}
+                                        <!-- <a href="{% url 'listing' listing.id %}" class="btn btn-primary btn-block">More Info</a> -->
+                                        <img class="card-img-top listing" src="{{ listing.photo_main.url }}" alt="">
+                                        <!-- </a> -->
+                                        <div class="card-img-overlay">
+                                            <!-- <h2> -->
+                                            <span class="badge badge-secondary text-white">&#8358;{{ listing.price | intcomma }}</span>
+                                            <!-- </h2> -->
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="listing-heading text-center_1">
+                                                <a class="text-primary property-title">{{ listing.house_title }}</a>
+                                            </div>
+                                            <!-- <div class="listing-heading text-center_1"> -->
+                                            <div class="listing_location text-center_1">
+                                                <a class="property-location">
+                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                    {{ listing.locality_name }}, {{ listing.campus_school }}, {{ listing.block_number }}
+                                                </a>
+                                            </div>
+                                            <div class="rows1">
+                                                <div class="row py-2 text-secondary left">
+                                                    <div class="col-6 icon">
+                                                        <div class="card_icon">
+                                                            <i class="fa fa-th-large"></i>
+                                                        </div>
+                                                        Type: {{ listing.house_type }}
+                                                    </div>
+                                                    <div class="col-6 icon">
+                                                        <div class="card_icon">
+                                                            <i class="fa fa-user"></i>
+                                                        </div>
+                                                        Agent: {{ listing.agent }}
+                                                    </div>
+                                                    <div class="col-6 icon">
+                                                        <div class="card_icon">
+                                                            <i class="fas fa-clock"></i>
+                                                        </div>
+                                                        <a class="listing-time-ago">Added: {{ listing.list_date | timesince }}
+                                                            ago</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col-md-12">
+                            <p>No Listings Available</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- <section id="work" class="bg-dark text-white text-center">
+		<h2 class="display-4">We Work For You</h2>
+		<h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem velit aperiam, unde aliquid at similique!</h4>
+		<hr>
+		<a href="{% url 'listings' %}" class="btn btn-secondary text-white btn-lg">View Our Featured Listings</a>
+	</section>
+ -->
+
+{% endblock %}
